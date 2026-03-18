@@ -10,6 +10,7 @@ import SwiftUI
 struct ProductListView: View {
     
     @StateObject private var viewModel: ProductListViewModel = ProductListViewModel()
+//    @EnvironmentObject var router: AppRouter
     @State private var deleteButtonState : Bool?
     @State private var itemIds: [Int?] = []
     
@@ -54,6 +55,7 @@ struct ProductListItem: View {
     let item: Product
     @Binding var selectedItems: [Int?]
     @Binding var deleteButtonState: Bool?
+    @EnvironmentObject var router: AppRouter
     var isSelected: Bool {
         selectedItems.contains(where: { $0 == item.id })
     }

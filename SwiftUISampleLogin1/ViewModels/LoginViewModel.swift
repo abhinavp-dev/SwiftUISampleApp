@@ -5,13 +5,13 @@
 //  Created by Abhinav        on 26/02/26.
 //
 
-import SwiftUI
-internal import Combine
+import Foundation
 
-class LoginVM : ObservableObject {
+@Observable
+class LoginVM  {
     
-    @Published var isLoading: Bool = false
-    @Published var showSuccess: Bool = false
+    var isLoading: Bool = false
+    var showSuccess: Bool = false
     
     let userName: String = "test@swiftui.in"
     let password: String = "123456"
