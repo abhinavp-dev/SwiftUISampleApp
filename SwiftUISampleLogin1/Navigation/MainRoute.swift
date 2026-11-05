@@ -8,4 +8,5 @@
 
 enum MainRoute: Hashable {
     case home
+    case about
 }

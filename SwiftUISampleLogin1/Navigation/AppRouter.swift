@@ -7,11 +7,11 @@
 
 
 import SwiftUI
-internal import Combine
 
-class AppRouter: ObservableObject {
+@Observable
+class AppRouter {
     
-    @Published var path = NavigationPath()
+    var path = NavigationPath()
 
     func push(_ route: AppRoute) {
         path.append(route)

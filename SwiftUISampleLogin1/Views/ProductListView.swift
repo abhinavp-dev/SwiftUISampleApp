@@ -9,10 +9,11 @@ import SwiftUI
 
 struct ProductListView: View {
     
-    @StateObject private var viewModel: ProductListViewModel = ProductListViewModel()
-//    @EnvironmentObject var router: AppRouter
+    @State private var viewModel: ProductListViewModel = ProductListViewModel()
     @State private var deleteButtonState : Bool?
     @State private var itemIds: [Int?] = []
+    @State private var isDialogeShown = false
+    @Environment(AppRouter.self) var router
     
     var body: some View {
         List(viewModel.products) { product in
@@ -24,6 +25,19 @@ struct ProductListView: View {
         .toolbarBackground(Color("Navy_blue"), for: .navigationBar)
         .toolbarBackgroundVisibility(.visible, for: .navigationBar)
         .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    isDialogeShown = true
+                }) {
+                    Image(systemName: "rectangle.portrait.and.arrow.right").colorInvert()
+                }
+                .confirmationDialog("Confirm Logout", isPresented: $isDialogeShown) {
+                    Button("Logout") { router.reset() }
+                } message: {
+                    Text("You are about to logout. Are you sure?")
+                }
+            }
+            .sharedBackgroundVisibility(.hidden)
             
             ToolbarItem(placement: .title) {
                 Text("Product List (\(viewModel.products.count))")
@@ -32,9 +46,11 @@ struct ProductListView: View {
             
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
-                    if deleteButtonState ?? true {
+                    if deleteButtonState ?? false {
                         viewModel.deleteItems(items: itemIds)
                         deleteButtonState = false
+                    } else {
+                        router.push(.main(.about))
                     }
                 }) {
                     HStack {
@@ -45,7 +61,7 @@ struct ProductListView: View {
             }
             .sharedBackgroundVisibility(.hidden)
         }
-        
+        .navigationBarBackButtonHidden(true)
     }
 }
 
@@ -55,7 +71,6 @@ struct ProductListItem: View {
     let item: Product
     @Binding var selectedItems: [Int?]
     @Binding var deleteButtonState: Bool?
-    @EnvironmentObject var router: AppRouter
     var isSelected: Bool {
         selectedItems.contains(where: { $0 == item.id })
     }

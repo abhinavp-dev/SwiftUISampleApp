@@ -6,11 +6,11 @@
 //
 
 import Foundation
-internal import Combine
 
-class ProductListViewModel : ObservableObject {
+@Observable
+class ProductListViewModel {
     
-    @Published var products: [Product] = [
+    var products: [Product] = [
         Product(
             id: 1,
             name: "Liquid Matte Lipstick",

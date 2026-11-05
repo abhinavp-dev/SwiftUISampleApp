@@ -15,7 +15,7 @@ struct LoginView: View {
     @State private var isNameValid = true
     @State private var isPasswordValid = true
     @State private var vm: LoginVM = LoginVM()
-    @EnvironmentObject var router: AppRouter
+    @Environment(AppRouter.self) var router
     
     var body: some View {
         
